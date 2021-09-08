@@ -8,7 +8,7 @@ const Navbar: FC<INavbar> = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <header className="lg:px-28 px-6 bg-white flex flex-wrap items-center justify-between lg:py-5 py-3 fixed w-screen z-10 shadow-lg">
+        <header className="lg:px-28 px-6 bg-white flex flex-wrap items-center justify-between lg:py-5 py-3 w-screen z-10 shadow-lg">
             <p>{getText("navbar.name")}</p>
             <label
                 htmlFor="menu-toggle"
