@@ -16,8 +16,7 @@ const ScorePage: FC<IScorePage> = () => {
     const [d, setD] = useState<{}[]>([]);
 
     useEffect(() => {
-        if (!loading) console.log(data[0].data);
-        if (!loading) setD(data[0].data);
+        if (!loading) setD(data[1].data);
     }, [loading, data]);
 
     const columns: Column<{}>[] = React.useMemo(
