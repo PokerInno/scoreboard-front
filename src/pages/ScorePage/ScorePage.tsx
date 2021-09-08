@@ -1,123 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { FC } from "react";
 import Table from "../../components/Table";
 import { Column } from "react-table";
-import { IData } from "../../interfaces/IData";
+import useGoogleSheets from "use-google-sheets";
+import { useEffect } from "react";
 
 export interface IScorePage {}
 
-const getData = () => [
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-    {
-        place: 1,
-        name: "Daniil Gubaidullin",
-        score: 24,
-    },
-];
-
 const ScorePage: FC<IScorePage> = () => {
-    const columns: Column<IData>[] = React.useMemo(
+    const { data, loading } = useGoogleSheets({
+        apiKey: process.env.REACT_APP_GOOGLE_API_KEY || "",
+        sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || "",
+    });
+
+    const [d, setD] = useState<{}[]>([]);
+
+    useEffect(() => {
+        if (!loading) console.log(data[0].data);
+        if (!loading) setD(data[0].data);
+    }, [loading, data]);
+
+    const columns: Column<{}>[] = React.useMemo(
         () => [
             {
                 Header: "Place",
-                accessor: "place",
+                accessor: "Position",
             },
             {
                 Header: "Name",
-                accessor: "name",
+                accessor: "Name",
             },
             {
                 Header: "Score",
-                accessor: "score",
+                accessor: "Score",
             },
         ],
         []
     );
 
-    const data = React.useMemo(() => getData(), []);
-
     return (
         <div className="justify-center">
-            <Table columns={columns} data={data} />
+            <Table columns={columns} data={d} />
         </div>
     );
 };

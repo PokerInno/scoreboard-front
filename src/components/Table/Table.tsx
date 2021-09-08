@@ -1,27 +1,15 @@
 import React, { FC } from "react";
-import { IData } from "../../interfaces/IData";
 import { useTable, Column } from "react-table";
-
 export interface ITable {
-    columns: Column<IData>[];
-    data: IData[];
+    columns: Column<{}>[];
+    data: {}[];
 }
 
 const Table: FC<ITable> = ({ columns, data }) => {
-    const defaultColumn = React.useMemo(
-        () => ({
-            minWidth: 150,
-            width: 150,
-            maxWidth: 150,
-        }),
-        []
-    );
-
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable<IData>({
+        useTable<{}>({
             columns,
             data,
-            defaultColumn,
         });
 
     return (
@@ -56,7 +44,7 @@ const Table: FC<ITable> = ({ columns, data }) => {
                                                 return (
                                                     <td
                                                         {...cell.getCellProps()}
-                                                        className="border-2 px-6 py-4 whitespace-nowrap text-center"
+                                                        className="border-2 lg:px-6 px-2 lg:py-4 py-1 whitespace-nowrap text-center"
                                                     >
                                                         {cell.render("Cell")}
                                                     </td>
