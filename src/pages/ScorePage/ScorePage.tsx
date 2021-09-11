@@ -31,6 +31,8 @@ const ScorePage: FC<IScorePage> = () => {
                     return Number((d as any)["Total"]);
                 },
                 sortType: "basic",
+                defaultCanSort: true,
+                sortDescFirst: true,
             },
         ],
         []

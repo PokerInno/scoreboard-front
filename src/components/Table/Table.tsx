@@ -11,6 +11,9 @@ const Table: FC<ITable> = ({ columns, data }) => {
             {
                 columns,
                 data,
+                initialState: {
+                    sortBy: [{ id: "Total", desc: true }],
+                },
             },
             useSortBy
         );
