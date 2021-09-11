@@ -22,12 +22,15 @@ const ScorePage: FC<IScorePage> = () => {
     const columns: Column<{}>[] = React.useMemo(
         () => [
             {
-                Header: "Name",
+                Header: "Person",
                 accessor: "Person",
             },
             {
-                Header: "Score",
-                accessor: "Total score",
+                Header: "Total",
+                accessor: (d) => {
+                    return Number((d as any)["Total"]);
+                },
+                sortType: "basic",
             },
         ],
         []
