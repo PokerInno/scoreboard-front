@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { useTable, Column } from "react-table";
+import { FC } from "react";
+import { useTable, Column, useSortBy } from "react-table";
 export interface ITable {
     columns: Column<{}>[];
     data: {}[];
@@ -7,10 +7,13 @@ export interface ITable {
 
 const Table: FC<ITable> = ({ columns, data }) => {
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable<{}>({
-            columns,
-            data,
-        });
+        useTable<{}>(
+            {
+                columns,
+                data,
+            },
+            useSortBy
+        );
 
     return (
         <div className="mt-5 lg:mx-28 mx-9 flex flex-col">
@@ -25,8 +28,20 @@ const Table: FC<ITable> = ({ columns, data }) => {
                                 {headerGroups.map((headerGroup) => (
                                     <tr {...headerGroup.getHeaderGroupProps()}>
                                         {headerGroup.headers.map((column) => (
-                                            <th {...column.getHeaderProps()}>
+                                            <th
+                                                {...column.getHeaderProps(
+                                                    column.getSortByToggleProps()
+                                                )}
+                                            >
                                                 {column.render("Header")}
+                                                {/* Add a sort direction indicator */}
+                                                <span>
+                                                    {column.isSorted
+                                                        ? column.isSortedDesc
+                                                            ? " 🔽"
+                                                            : " 🔼"
+                                                        : ""}
+                                                </span>
                                             </th>
                                         ))}
                                     </tr>
