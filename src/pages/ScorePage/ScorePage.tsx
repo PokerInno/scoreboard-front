@@ -16,22 +16,18 @@ const ScorePage: FC<IScorePage> = () => {
     const [d, setD] = useState<{}[]>([]);
 
     useEffect(() => {
-        if (!loading) setD(data[1].data);
+        if (!loading) setD(data[0].data);
     }, [loading, data]);
 
     const columns: Column<{}>[] = React.useMemo(
         () => [
             {
-                Header: "Place",
-                accessor: "Position",
-            },
-            {
                 Header: "Name",
-                accessor: "Name",
+                accessor: "Person",
             },
             {
                 Header: "Score",
-                accessor: "Score",
+                accessor: "Total score",
             },
         ],
         []
