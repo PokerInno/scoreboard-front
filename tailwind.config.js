@@ -27,6 +27,9 @@ module.exports = {
             "90v": "90vw",
             "100v": "100vw",
         },
+        border: {
+            1: "1px",
+        },
     },
     variants: {
         extend: {},

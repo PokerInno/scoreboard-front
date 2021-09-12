@@ -1,26 +1,45 @@
 import { FC } from "react";
-import { useTable, Column, useSortBy } from "react-table";
+import { useTable, Column, useSortBy, usePagination } from "react-table";
+import Icon from "../Icon/Icon";
 export interface ITable {
     columns: Column<{}>[];
     data: {}[];
 }
 
 const Table: FC<ITable> = ({ columns, data }) => {
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable<{}>(
-            {
-                columns,
-                data,
-                initialState: {
-                    sortBy: [{ id: "Total", desc: true }],
-                },
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        prepareRow,
+
+        page,
+        canPreviousPage,
+        canNextPage,
+        pageOptions,
+        pageCount,
+        gotoPage,
+        nextPage,
+        previousPage,
+        setPageSize,
+        state: { pageIndex, pageSize },
+    } = useTable<{}>(
+        {
+            columns,
+            data,
+            initialState: {
+                pageIndex: 0,
+                pageSize: 15,
+                sortBy: [{ id: "Total", desc: true }],
             },
-            useSortBy
-        );
+        },
+        useSortBy,
+        usePagination
+    );
 
     return (
-        <div className="mt-5 lg:mx-28 mx-9 flex flex-col">
-            <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
+        <div className="mt-5 lg:mx-28 mx-6 flex flex-col">
+            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <table
@@ -54,7 +73,7 @@ const Table: FC<ITable> = ({ columns, data }) => {
                                 {...getTableBodyProps()}
                                 className="bg-white divide-y divide-gray-200"
                             >
-                                {rows.map((row, i) => {
+                                {page.map((row, i) => {
                                     prepareRow(row);
                                     return (
                                         <tr {...row.getRowProps()}>
@@ -74,6 +93,59 @@ const Table: FC<ITable> = ({ columns, data }) => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+            <div className="pagination flex justify-between mt-3 mb-3">
+                <div className="flex flex-row space-x-5 items-center">
+                    <span className="text-sm text-gray-700">
+                        Page{" "}
+                        <strong>
+                            {pageIndex + 1} of {pageOptions.length}
+                        </strong>
+                    </span>
+                    <select
+                        className="shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 "
+                        value={pageSize}
+                        onChange={(e) => {
+                            setPageSize(Number(e.target.value));
+                        }}
+                    >
+                        {[10, 15, 20, 40, 50].map((pageSize) => (
+                            <option key={pageSize} value={pageSize}>
+                                {pageSize}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="flex space-x-1">
+                    <button
+                        className="rounded-l-md relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-200"
+                        onClick={() => gotoPage(0)}
+                        disabled={!canPreviousPage}
+                    >
+                        <Icon name="doubleLeft" width="16px" />
+                    </button>
+                    <button
+                        className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-200"
+                        onClick={() => previousPage()}
+                        disabled={!canPreviousPage}
+                    >
+                        <Icon name="left" width="16px" />
+                    </button>
+                    <button
+                        className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-200"
+                        onClick={() => nextPage()}
+                        disabled={!canNextPage}
+                    >
+                        <Icon name="right" width="16px" />
+                    </button>
+                    <button
+                        className="rounded-r-md relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-200"
+                        onClick={() => gotoPage(pageCount - 1)}
+                        disabled={!canNextPage}
+                    >
+                        <Icon name="doubleRight" width="16px" />
+                    </button>
                 </div>
             </div>
         </div>
