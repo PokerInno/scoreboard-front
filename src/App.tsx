@@ -1,11 +1,14 @@
 import Navbar from "./components/Navbar";
-import ScorePage from "./pages/ScorePage";
+import { BrowserRouter as Router } from "react-router-dom";
+import NavbarRouter from "./routers/NavbarRouter";
 
 function App() {
     return (
         <>
             <Navbar />
-            <ScorePage />
+            <Router>
+                <NavbarRouter />
+            </Router>
         </>
     );
 }
