@@ -35,7 +35,8 @@ const StatisticsPage: FC<IStatisticsPage> = () => {
     const location = useLocation();
 
     useEffect(() => {
-        prepareData(location.state as { person: IPerson });
+        console.log(location.state);
+        if (location.state) prepareData(location.state as { person: IPerson });
     }, [location.state]);
 
     return (
@@ -47,9 +48,11 @@ const StatisticsPage: FC<IStatisticsPage> = () => {
                 dataKey="score"
                 margin={{ top: 30, right: 30, bottom: 5, left: 0 }}
             />
-            <p className="text-2xl">
-                {(location.state as { person: IPerson }).person.Person}
-            </p>
+            {location.state && (
+                <p className="text-2xl">
+                    {(location.state as { person: IPerson }).person.Person}
+                </p>
+            )}
         </div>
     );
 };

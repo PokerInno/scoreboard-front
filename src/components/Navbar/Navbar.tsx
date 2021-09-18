@@ -35,9 +35,9 @@ const Navbar: FC<INavbar> = () => {
                         <NavLink to={getRoute("navbar.scoreboard")}>
                             <li>{getText("navbar.scoreboard")}</li>
                         </NavLink>
-                        {/* <NavLink to={getRoute("navbar.statistics")}>
+                        <NavLink to={getRoute("navbar.statistics")}>
                             <li>{getText("navbar.statistics")}</li>
-                        </NavLink> */}
+                        </NavLink>
                     </ul>
                 </nav>
             </div>
