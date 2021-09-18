@@ -1,5 +1,7 @@
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 import { useTable, Column, useSortBy, usePagination } from "react-table";
+import getRoute from "../../functions/getRoute";
 import Icon from "../Icon/Icon";
 export interface ITable {
     columns: Column<{}>[];
@@ -83,7 +85,23 @@ const Table: FC<ITable> = ({ columns, data }) => {
                                                         {...cell.getCellProps()}
                                                         className="border-2 lg:px-6 px-2 lg:py-4 py-1 whitespace-nowrap text-center"
                                                     >
-                                                        {cell.render("Cell")}
+                                                        <NavLink
+                                                            to={{
+                                                                pathname:
+                                                                    getRoute(
+                                                                        "navbar.statistics"
+                                                                    ),
+                                                                state: {
+                                                                    person: cell
+                                                                        .row
+                                                                        .original,
+                                                                },
+                                                            }}
+                                                        >
+                                                            {cell.render(
+                                                                "Cell"
+                                                            )}
+                                                        </NavLink>
                                                     </td>
                                                 );
                                             })}

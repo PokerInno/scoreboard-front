@@ -1,4 +1,6 @@
 import { FC, useState } from "react";
+import { NavLink } from "react-router-dom";
+import getRoute from "../../functions/getRoute";
 import getText from "../../functions/getText";
 import Icon from "../Icon";
 
@@ -30,7 +32,12 @@ const Navbar: FC<INavbar> = () => {
             >
                 <nav>
                     <ul className="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0 space-x-5">
-                        <li>{getText("navbar.scoreboard")}</li>
+                        <NavLink to={getRoute("navbar.scoreboard")}>
+                            <li>{getText("navbar.scoreboard")}</li>
+                        </NavLink>
+                        {/* <NavLink to={getRoute("navbar.statistics")}>
+                            <li>{getText("navbar.statistics")}</li>
+                        </NavLink> */}
                     </ul>
                 </nav>
             </div>
