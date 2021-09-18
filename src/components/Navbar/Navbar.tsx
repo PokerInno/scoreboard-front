@@ -11,7 +11,9 @@ const Navbar: FC<INavbar> = () => {
 
     return (
         <header className="lg:px-28 px-6 bg-white flex flex-wrap items-center justify-between lg:py-5 py-3 w-screen z-10 shadow-lg">
-            <p>{getText("navbar.name")}</p>
+            <NavLink to={getRoute("navbar.scoreboard")}>
+                <p>{getText("navbar.name")}</p>
+            </NavLink>
             <label
                 htmlFor="menu-toggle"
                 className="pointer-cursor lg:hidden block"
